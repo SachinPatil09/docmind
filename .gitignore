@@ -432,3 +432,5 @@ build/
 /frontend/node_modules/zwitch/
 /frontend/vite.config.d.ts
 /frontend/vite.config.js
+### Local secrets ###
+.env

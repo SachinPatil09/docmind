@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5434}/${DB_NAME:docmind}
     username: ${DB_USER:postgres}
-    password: ${DB_PASSWORD:Sachinpatil@2005}
+    password: ${DB_PASSWORD}
 
   jpa:
     hibernate:
@@ -18,13 +18,13 @@ spring:
   ai:
     google:
       genai:
-        api-key: ${GEMINI_API_KEY:AQ.Ab8RN6KGTfS7L3SS0bnnh0kkJjYxGiAq6WMnGrQDmCgbsKN-jw}
+        api-key: ${GEMINI_API_KEY}
         chat:
           options:
             model: ${GEMINI_CHAT_MODEL:gemini-3.5-flash-lite}
             temperature: 0.2
         embedding:
-          api-key: ${GEMINI_API_KEY:AQ.Ab8RN6KGTfS7L3SS0bnnh0kkJjYxGiAq6WMnGrQDmCgbsKN-jw}
+          api-key: ${GEMINI_API_KEY}
           text:
             model: gemini-embedding-001
             dimensions: 1536
@@ -63,7 +63,7 @@ app:
 
 
 jwt:
-  secret: ${JWT_SECRET:sdafasfasfasdhfojhascapfdaDHAfbashfabfashfasbfshfdasfhqf}
+  secret: ${JWT_SECRET}
   expiration: 3600000
 
 
