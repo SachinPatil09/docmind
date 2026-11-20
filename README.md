@@ -91,37 +91,41 @@ docmind/
 - Docker (for PostgreSQL)
 - A Google Gemini API key ([get one here](https://aistudio.google.com/app/apikey))
 
-### 1. Start the database
+### 1. Configure environment variables
+
+All secrets come from environment variables; nothing is hardcoded. Copy the template and fill it in:
 
 ```bash
-docker compose up -d
+cp .env.example .env
 ```
-
-This starts `pgvector/pgvector:pg16` on **localhost:5434** with database `docmind`.
-
-### 2. Configure environment variables
-
-The backend reads these (see `src/main/resources/application-dev.yml`):
 
 | Variable | Description | Default |
 |---|---|---|
-| `GEMINI_API_KEY` | Google Gemini API key | – (set this) |
-| `JWT_SECRET` | Secret used to sign JWTs (≥ 32 chars) | – (set this) |
+| `GEMINI_API_KEY` | Google Gemini API key | – (required) |
+| `JWT_SECRET` | Secret used to sign JWTs (≥ 32 chars) | – (required) |
+| `DB_PASSWORD` | Postgres password (used by Docker and the backend) | – (required) |
 | `GEMINI_CHAT_MODEL` | Gemini chat model | `gemini-3.5-flash-lite` |
 | `DB_HOST` | Postgres host | `localhost` |
 | `DB_PORT` | Postgres port | `5434` |
 | `DB_NAME` | Database name | `docmind` |
 | `DB_USER` | Database user | `postgres` |
-| `DB_PASSWORD` | Database password | matches `docker-compose.yml` |
+
+`.env` is git-ignored. Never commit real keys.
+
+### 2. Start the database
 
 ```bash
-export GEMINI_API_KEY=your-gemini-key
-export JWT_SECRET=a-long-random-secret-at-least-32-characters
+docker compose up -d
 ```
+
+Docker Compose reads `DB_PASSWORD` from `.env` and starts `pgvector/pgvector:pg16` on **localhost:5434** with database `docmind`.
 
 ### 3. Run the backend
 
+Spring Boot doesn't read `.env` by itself, so export it into your shell first:
+
 ```bash
+set -a && source .env && set +a
 ./mvnw spring-boot:run
 ```
 
