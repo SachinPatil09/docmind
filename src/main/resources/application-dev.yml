@@ -1,0 +1,81 @@
+#database configurations
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5434}/${DB_NAME:docmind}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:Sachinpatil@2005}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+
+  ai:
+    google:
+      genai:
+        api-key: ${GEMINI_API_KEY:AQ.Ab8RN6KGTfS7L3SS0bnnh0kkJjYxGiAq6WMnGrQDmCgbsKN-jw}
+        chat:
+          options:
+            model: ${GEMINI_CHAT_MODEL:gemini-3.5-flash-lite}
+            temperature: 0.2
+        embedding:
+          api-key: ${GEMINI_API_KEY:AQ.Ab8RN6KGTfS7L3SS0bnnh0kkJjYxGiAq6WMnGrQDmCgbsKN-jw}
+          text:
+            model: gemini-embedding-001
+            dimensions: 1536
+            task-type: RETRIEVAL_DOCUMENT
+
+    vectorstore:
+      pgvector:
+        dimensions: 1536
+        index-type: HNSW
+        distance-type: COSINE_DISTANCE
+        table-name: vector_store
+        schema-name: public
+        initialize-schema: true
+  servlet:
+    multipart:
+      max-file-size: 25MB
+      max-request-size: 50MB
+
+
+
+#app configurations
+app:
+  rag:
+    chunk-size: 700
+    #    chunk-overlap: 100
+    top-k: 5
+    similarity-threshold: 0.0
+
+  cors:
+    allowed-origins: "*"
+    allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+    allowed-headers: "*"
+
+
+#jwt configurations
+
+
+jwt:
+  secret: ${JWT_SECRET:sdafasfasfasdhfojhascapfdaDHAfbashfabfashfasbfshfdasfhqf}
+  expiration: 3600000
+
+
+bootui:
+  enabled: ON
+
+
+logging:
+  level:
+    org:
+      springframework:
+        ai:
+          chat:
+            client:
+              advisor: DEBUG
